@@ -1,4 +1,14 @@
 let users = []
+let page=window.location.href.split("/");
+page=page
+console.log(page)
+
+function AllUsers(){
+    let takeUser=localStorage.getItem("usersItem")
+
+    users=JSON.parse(takeUser)||[]
+}
+AllUsers()
 
 const signup = () => {
     console.log("users Entery:", users)
@@ -16,15 +26,15 @@ const signup = () => {
             userPass: password,
             userCpass: Cpassword,
         }
-        users.push(newUser)
         for (let i = 0; i < users.length; i++) {
             if (users[i].userEmail === email) {
                 alert("user already exist")
                 return 0;
             }
         }
+        users.push(newUser)
 
-        localStorage.setItem("users", JSON.stringify(users))
+        localStorage.setItem("usersItem", JSON.stringify(users))
         window.location.href = "./login.html"
     }
     else {
@@ -45,8 +55,8 @@ const login = () => {
         if (users[i].userEmail === LoginEmail) {
             if (users[i].userPass === Loginpass) {
                 isMatch = true
-                alert("sucess")
-                // break
+                localStorage.setItem("LoginItem",JSON.stringify(users[i]))
+                 window.location.href="./home.html";
             }
         }
 
@@ -56,4 +66,9 @@ const login = () => {
         alert("sorry")
     }
 
+}
+
+const logout=()=>{
+    localStorage.removeItem("LoginItem")
+    window.location.href="./login.html"
 }
